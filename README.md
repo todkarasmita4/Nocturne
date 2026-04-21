@@ -1,15 +1,13 @@
-# Nocturne
-secure chat application app
-# 🌸 CipherBloom
+# 🌙 Nocturne
 
 A secure real-time chat application with:
 
-- AES Encryption
-- Diffie-Hellman Key Exchange
-- RSA Algorithm
-- JWT Authentication
-- bcrypt Password Hashing
-- Socket.io Real-time Messaging
+- AES Encryption  
+- Diffie-Hellman Key Exchange  
+- RSA Algorithm  
+- JWT Authentication  
+- bcrypt Password Hashing  
+- Socket.io Real-time Messaging  
 
 ## Run
 

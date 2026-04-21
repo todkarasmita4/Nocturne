@@ -16,20 +16,16 @@ export default function Chat() {
     socket.emit("join", user._id);
 
     socket.on("receiveMessage", (data) => {
-      setMessages((prev) => [
-        ...prev,
-        { text: data.message, me: false }
-      ]);
+      setMessages((prev) => [...prev, { text: data.message, me: false }]);
     });
   }, []);
 
   const fetchMessages = async () => {
     if (!receiver) return;
 
-    const res = await axios.get(
-      `http://localhost:5000/api/chat/${receiver}`,
-      { headers: { Authorization: token } }
-    );
+    const res = await axios.get(`http://localhost:5000/api/chat/${receiver}`, {
+      headers: { Authorization: token }
+    });
 
     const formatted = res.data.map((m) => ({
       text: m.content,
@@ -42,10 +38,7 @@ export default function Chat() {
   const sendMessage = async () => {
     await axios.post(
       "http://localhost:5000/api/chat/send",
-      {
-        receiver,
-        message: msg
-      },
+      { receiver, message: msg },
       { headers: { Authorization: token } }
     );
 
@@ -62,17 +55,16 @@ export default function Chat() {
   return (
     <div className="chat-container">
       <div className="sidebar">
-        <h3>🌸 CipherBloom</h3>
+        <h3>🌙 Nocturne</h3>
 
-        <input
-          placeholder="Enter Receiver ID"
-          onChange={(e) => setReceiver(e.target.value)}
-        />
-
+        <input placeholder="Enter Receiver ID" onChange={(e) => setReceiver(e.target.value)} />
         <button onClick={fetchMessages}>Load Chat</button>
       </div>
 
       <div className="chat-box">
+        <div className="blob"></div>
+        <div className="star">Hi!</div>
+
         <div className="messages">
           {messages.map((m, i) => (
             <div key={i} className={`message ${m.me ? "me" : "other"}`}>
@@ -82,11 +74,8 @@ export default function Chat() {
         </div>
 
         <div className="input-row">
-          <input
-            value={msg}
-            onChange={(e) => setMsg(e.target.value)}
-          />
-          <button onClick={sendMessage}>Send</button>
+          <input value={msg} onChange={(e) => setMsg(e.target.value)} />
+          <button onClick={sendMessage}>Send 🚀</button>
         </div>
       </div>
     </div>

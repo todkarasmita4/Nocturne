@@ -1,10 +1,11 @@
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
-  background: #fff5fb;
+  background: #2f3cff;
+  color: white;
 }
 
-/* Container */
+/* AUTH */
 .auth-container {
   height: 100vh;
   display: flex;
@@ -12,86 +13,105 @@ body {
   align-items: center;
 }
 
-/* Card */
 .card {
-  background: #ffffff;
+  background: #caff4d;
   padding: 30px;
   border-radius: 30px;
   width: 300px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  color: black;
   text-align: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
 
-/* Inputs */
+/* INPUT */
 input {
   width: 100%;
   padding: 12px;
   margin: 10px 0;
-  border-radius: 20px;
+  border-radius: 25px;
   border: none;
-  background: #f1f1f1;
 }
 
-/* Buttons */
+/* BUTTON */
 button {
   width: 100%;
   padding: 12px;
+  border-radius: 25px;
   border: none;
-  border-radius: 20px;
-  background: linear-gradient(135deg, #ffafcc, #cdb4db);
-  color: white;
+  background: #ff7ac3;
   font-weight: bold;
   cursor: pointer;
 }
 
-/* Chat Layout */
+/* CHAT */
 .chat-container {
   display: flex;
   height: 100vh;
 }
 
-/* Sidebar */
 .sidebar {
   width: 25%;
-  background: #caffbf;
+  background: #caff4d;
+  color: black;
   padding: 20px;
-  border-radius: 0 30px 30px 0;
+  border-radius: 0 40px 40px 0;
 }
 
-/* Chat Box */
 .chat-box {
   flex: 1;
-  display: flex;
-  flex-direction: column;
   padding: 20px;
+  position: relative;
 }
 
-/* Messages */
 .messages {
   flex: 1;
   overflow-y: auto;
 }
 
+/* MESSAGES */
 .message {
-  padding: 12px 18px;
-  border-radius: 20px;
+  padding: 14px;
+  border-radius: 25px;
   margin: 10px;
   max-width: 60%;
 }
 
-/* Me */
 .me {
-  background: #ffafcc;
+  background: #ff7ac3;
+  color: black;
   align-self: flex-end;
 }
 
-/* Other */
 .other {
-  background: #bdb2ff;
+  background: #ffe66d;
+  color: black;
 }
 
-/* Input Row */
+/* INPUT ROW */
 .input-row {
   display: flex;
   gap: 10px;
+}
+
+/* FUN SHAPES */
+.blob {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  background: #ff7ac3;
+  border-radius: 50%;
+  top: 10%;
+  left: 70%;
+  opacity: 0.5;
+}
+
+.star {
+  position: absolute;
+  top: 20%;
+  left: 20%;
+  background: #ffe66d;
+  padding: 10px;
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 
+                     79% 91%, 50% 70%, 21% 91%, 32% 57%, 
+                     2% 35%, 39% 35%);
 }
