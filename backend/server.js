@@ -1,56 +1,62 @@
 import express from "express";
+import cors from "cors";
 import http from "http";
 import { Server } from "socket.io";
 import dotenv from "dotenv";
-import cors from "cors";
+
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
-import Message from "./models/Message.js";
-import { encrypt, decrypt } from "./crypto/aes.js";
+import chatRoutes from "./routes/chatRoutes.js";
 
 dotenv.config();
-connectDB();
 
 const app = express();
-app.use(cors());
+
+// ✅ Connect DB
+connectDB();
+
+// ✅ Middleware
 app.use(express.json());
+app.use(cors({
+  origin: "http://localhost:5173",
+  credentials: true
+}));
 
+// ✅ Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/chat", chatRoutes);
 
+// ✅ Create HTTP server
 const server = http.createServer(app);
+
+// ✅ Socket.io with CORS FIX
 const io = new Server(server, {
-  cors: { origin: "*" }
+  cors: {
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST"]
+  }
 });
 
-let users = {};
-
+// ✅ Socket Logic
 io.on("connection", (socket) => {
+  console.log("⚡ User connected");
+
   socket.on("join", (userId) => {
-    users[userId] = socket.id;
+    socket.join(userId);
   });
 
-  socket.on("sendMessage", async ({ sender, receiver, message }) => {
-    const secret = sender + receiver;
+  socket.on("sendMessage", ({ sender, receiver, message }) => {
+    io.to(receiver).emit("receiveMessage", { message });
+  });
 
-    const encrypted = encrypt(message, secret);
-
-    await Message.create({
-      sender,
-      receiver,
-      content: encrypted
-    });
-
-    const receiverSocket = users[receiver];
-
-    if (receiverSocket) {
-      io.to(receiverSocket).emit("receiveMessage", {
-        sender,
-        message: decrypt(encrypted, secret)
-      });
-    }
+  socket.on("disconnect", () => {
+    console.log("❌ User disconnected");
   });
 });
 
-server.listen(process.env.PORT, () =>
-  console.log(`🚀 Server running on ${process.env.PORT}`)
-);
+// ✅ Start server
+const PORT = process.env.PORT || 5000;
+
+server.listen(PORT, () => {
+  console.log(`🚀 Server running on ${PORT}`);
+});
